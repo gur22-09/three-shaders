@@ -1,8 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import GUI from "lil-gui";
-import vertexShader from "./shaders/test/vertex.glsl";
-import fragmentShader from "./shaders/test/fragment.glsl";
+import vertexShader from "./shaders/patterns/vertex.glsl";
+import fragmentShader from "./shaders/patterns/fragment.glsl";
 
 /**
  * Base
@@ -41,20 +41,20 @@ geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
 console.log(geometry.attributes.uv);
 
 // Material
-const material = new THREE.RawShaderMaterial({
+const material = new THREE.ShaderMaterial({
   vertexShader,
   fragmentShader,
   transparent: true,
-  uniforms: {
-    uFrequency: { value: new THREE.Vector2(5, 10) },
-    uTime: { value: 0 },
-    uTexture: { value: logoTexture }
-  }
+  // uniforms: {
+  //   uFrequency: { value: new THREE.Vector2(5, 10) },
+  //   uTime: { value: 0 },
+  //   uTexture: { value: logoTexture }
+  // }
 });
 
 // gui
-gui.add(material.uniforms.uFrequency.value, 'x').min(0).max(20).step(0.01).name('frequencyX');
-gui.add(material.uniforms.uFrequency.value, 'y').min(0).max(20).step(0.01).name('frequencyY');
+// gui.add(material.uniforms.uFrequency.value, 'x').min(0).max(20).step(0.01).name('frequencyX');
+// gui.add(material.uniforms.uFrequency.value, 'y').min(0).max(20).step(0.01).name('frequencyY');
 
 // Mesh
 const mesh = new THREE.Mesh(geometry, material);
@@ -115,7 +115,7 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
-  material.uniforms.uTime.value = elapsedTime;
+ 
 
   // Update controls
   controls.update();
